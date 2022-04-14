@@ -1,0 +1,22 @@
+.listStyle{
+    list-style-type: none;
+    border: 2px solid black;
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    margin: 0 auto;
+    max-width: 70%;
+}
+
+.listContainers{
+    display: flex;
+}
+
+.listStyle{
+    flex: 1;
+    padding: 2em;
+}
+
