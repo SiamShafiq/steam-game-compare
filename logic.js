@@ -5,6 +5,11 @@ let steamGames = "https://protected-castle-91862.herokuapp.com/https://api.steam
 let check1 = false;
 let check2 = false;
 
+//76561198093023428
+//76561198118253636
+
+let idCollections = [];
+
 $("#compareBtn").prop("disabled", true);
 
 // let seek1 = document.getElementById("#steamIDinput1");
@@ -18,15 +23,28 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-  $("#seekBtn2").click(function(){
-      let steamIDinput = $("#steamIDinput2").val();
-      let new_url = `https://protected-castle-91862.herokuapp.com/https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${api_key}&steamid=${steamIDinput}&format=json`
-      addGameNames(new_url,2);
-      check2 = true;
+  $("#addSteamID").click(function(){
+      let steamIDinput = $("#steamIDinput").val();
+      if(idCollections.includes(steamIDinput)){
+        alert("You've already entered this Steam ID. Try again.");
+        $("#steamIDinput").val('');
+      }else{
+        idCollections.push(steamIDinput);
+        $("#id_list").append(steamIDinput + ", ");
+        $("#steamIDinput").val('');
+      }
+      if(idCollections.length > 0){
+        $("#findGamesBtn").prop("disabled", false);
+      }
   }); 
 });
 
-
+$(document).ready(function() {
+  $("#findGamesBtn").click(function(){
+    findCommonGames();
+    // findCommonGames();
+  }); 
+});
 
 
 function getSteamGames(customURL) {
@@ -60,6 +78,63 @@ function getAppIdNames(){
     })
   })
 }
+let smallest = 100000;
+let small_index = 0;
+let appIDCollections = [];
+//76561198093023428 //t
+//76561198118253636 //s
+//76561198048010035 //sbd
+
+function findCommonGames(){
+  let gamesList = [];
+
+  idCollections.forEach((steam_profile) => {
+    let url = `https://protected-castle-91862.herokuapp.com/https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${api_key}&steamid=${steam_profile}&format=json`
+    getSteamGames(url).then((data) =>{
+      let games = data["response"]["games"];
+      let appId = [];
+      
+      for(var i = 0; i < games.length; i++){
+        appId.push(games[i]["appid"]);
+      }
+
+      appIDCollections.push(appId);
+    })
+  });
+
+  setTimeout(filteredArrays, 3000);
+}
+
+function filteredArrays(){
+  // console.log(appIDCollections);
+  for(let i = 0; i < appIDCollections; i++){
+    console.log(appIDCollections[i]);
+  }
+  // var filteredArray = []
+
+  // for(let i = 0; i < appIDCollections.length-1; i++){
+  //   filteredArray.push(appIDCollections[i].filter(value => appIDCollections[i+1].includes(value)));
+  // }
+  filteredArray = appIDCollections[0].filter(value => appIDCollections[1].includes(value));
+  console.log(filteredArray);
+
+  getAppIdNames().then((data) =>{
+    let appNames = data["applist"]["apps"];
+
+    for(var i = 0; i < filteredArray.length; i++){
+      for(var names of appNames){
+        if(filteredArray[i] == names["appid"]){
+          console.log(names["name"]);
+          $("#gameslist").append("<li>" + names["name"] + "</li>");
+        }
+      }
+    }
+    
+  })
+
+}
+
+
 
 function addGameNames(url, check){
   getSteamGames(url).then((data) => {

@@ -9,23 +9,25 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-
-        
         <div id="container">
-            <button id="compareBtn">Compare</button>
-            <div class="listContainers">
-                <ul id="gamelist" class="listStyle">
-                    <input id="steamIDinput1"></input>
-                    <button id="seekBtn1">Seek</button>
-                </ul>
-    
-                <ul id="gamelist2" class="listStyle">
-                    <input id="steamIDinput2"></input>
-                    <button id="seekBtn2">Seek</button>
+            <div id="header">
+                <div id="header_container">
+                    <input placeholder="Enter Steam ID" id="steamIDinput"></input>
+                    <button id="addSteamID">+</button>
+                </div>
+            </div>
+
+            <div id="content">
+                <h2>Steam IDs Added: [<span id="id_list"></span>]</h2>
+                <button id="findGamesBtn">Find Games</button>
+                <h3 id="list_title">A total of X games were found</h3>
+                <ul id="gameslist">
+                    
                 </ul>
             </div>
-            
+
         </div>
+
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="logic.js" async defer></script>
     </body>
