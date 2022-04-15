@@ -1,0 +1,85 @@
+@import url('https://css.gg/add.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap');
+
+body, html{
+    margin: 0;
+    /* padding: 0.5em; */
+    font-family: 'Inter', sans-serif;
+
+}
+
+#header{
+    background-color: #D38B8B;
+    padding: 1.5em;
+    /* border-radius: 28px; */
+}
+
+#header_container{
+    display: flex;
+}
+
+#header_container button{
+    font-size: 50px;
+    border-radius: 50px;
+    border: 2px solid black;
+    margin: 10px;
+}
+
+#header_container button:hover{
+    background-color:black;
+    color: white;
+}
+
+#header_container button:active{
+    background-color:gray;
+    color: white;
+}
+
+#header_container input{
+    font-family: 'Inter', sans-serif;
+    margin-right:1em;
+    font-size: 3em;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid black;
+    background-color: transparent;
+    color: white;
+}
+
+#header_container input:focus {
+    outline: none;
+}
+
+#header h1{
+    margin: 0;
+    padding: 0;
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    /* margin: 20px; */
+}
+
+#content{
+    padding: 2em;
+}
+
+#content h2{
+    margin-bottom: 10px;
+}
+
+#content button{
+    font-size: 1.2em;
+    font-family: 'Inter', sans-serif;
+}
+
+#gameslist{
+    list-style-type:disclosure-closed;
+    font-size: 1.4em;
+}
+
+#list_title{
+    font-size: 1.4em;
+}

@@ -6,11 +6,29 @@
         <title>Steam Game Comparer</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <h1>Hello.</h1>
+        <div id="container">
+            <div id="header">
+                <div id="header_container">
+                    <input placeholder="Enter Steam ID" id="steamIDinput"></input>
+                    <button id="addSteamID">+</button>
+                </div>
+            </div>
+
+            <div id="content">
+                <h2>Steam IDs Added: [<span id="id_list"></span>]</h2>
+                <button id="findGamesBtn">Find Games</button>
+                <h3 id="list_title">A total of X games were found</h3>
+                <ul id="gameslist">
+                    
+                </ul>
+            </div>
+
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="logic.js" async defer></script>
     </body>
 </html>
