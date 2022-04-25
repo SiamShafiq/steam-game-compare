@@ -5,6 +5,8 @@ let steamGames = "https://protected-castle-91862.herokuapp.com/https://api.steam
 let check1 = false;
 let check2 = false;
 
+// let steamurl = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${api_key}&steamids=${id}`;
+
 //76561198093023428
 //76561198118253636
 
@@ -13,22 +15,29 @@ let idCollections = [];
 $("#compareBtn").prop("disabled", true);
 
 // let seek1 = document.getElementById("#steamIDinput1");
-$(document).ready(function() {
-  $("#seekBtn1").click(function(){
-      let steamIDinput = $("#steamIDinput1").val();
-      let new_url = `https://protected-castle-91862.herokuapp.com/https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${api_key}&steamid=${steamIDinput}&format=json`
-      addGameNames(new_url, 1);
-      check1 = true;
-  }); 
-});
+// $(document).ready(function() {
+//   $("#seekBtn1").click(function(){
+//       let steamIDinput = $("#steamIDinput1").val();
+//       let new_url = `https://protected-castle-91862.herokuapp.com/https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${api_key}&steamid=${steamIDinput}&format=json`
+//       addGameNames(new_url, 1);
+//       check1 = true;
+//   }); 
+// });
 
 $(document).ready(function() {
   $("#addSteamID").click(function(){
       let steamIDinput = $("#steamIDinput").val();
+      let steamurl = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${api_key}&steamids=${steamIDinput}`;
+      
+      //TODO: Add Steam profile name to DOM.
+
       if(idCollections.includes(steamIDinput)){
         alert("You've already entered this Steam ID. Try again.");
         $("#steamIDinput").val('');
-      }else{
+      }else if($("#steamIDinput").val() == ''){
+        alert("You haven't input anything. Try again.");
+      }
+      else{
         idCollections.push(steamIDinput);
         $("#id_list").append(steamIDinput + ", ");
         $("#steamIDinput").val('');
@@ -89,8 +98,9 @@ function findCommonGames(){
   let gamesList = [];
 
   idCollections.forEach((steam_profile) => {
-    let url = `https://protected-castle-91862.herokuapp.com/https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${api_key}&steamid=${steam_profile}&format=json`
+    let url = `https://protected-castle-91862.herokuapp.com/https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${api_key}&steamid=${steam_profile}&format=json&include_appinfo=1`
     getSteamGames(url).then((data) =>{
+      console.log(data);
       let games = data["response"]["games"];
       let appId = [];
       
@@ -106,7 +116,6 @@ function findCommonGames(){
 }
 
 function filteredArrays(){
-  // console.log(appIDCollections);
   for(let i = 0; i < appIDCollections; i++){
     console.log(appIDCollections[i]);
   }
@@ -115,8 +124,11 @@ function filteredArrays(){
   // for(let i = 0; i < appIDCollections.length-1; i++){
   //   filteredArray.push(appIDCollections[i].filter(value => appIDCollections[i+1].includes(value)));
   // }
+
   filteredArray = appIDCollections[0].filter(value => appIDCollections[1].includes(value));
   console.log(filteredArray);
+
+  let gamesCounter = 0;
 
   getAppIdNames().then((data) =>{
     let appNames = data["applist"]["apps"];
@@ -124,17 +136,15 @@ function filteredArrays(){
     for(var i = 0; i < filteredArray.length; i++){
       for(var names of appNames){
         if(filteredArray[i] == names["appid"]){
-          console.log(names["name"]);
+          gamesCounter++;
           $("#gameslist").append("<li>" + names["name"] + "</li>");
         }
       }
     }
-    
+
+    $("#list_title span").text(gamesCounter);
   })
-
 }
-
-
 
 function addGameNames(url, check){
   getSteamGames(url).then((data) => {
